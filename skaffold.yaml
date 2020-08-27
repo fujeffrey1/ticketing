@@ -3,7 +3,6 @@ kind: Config
 build:
   artifacts:
     - image: fujeffrey1/ticketing-auth
-      # - image: us.gcr.io/ticketing-dev-286019/auth
       context: auth
       sync:
         manual:
@@ -11,12 +10,17 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
+    - image: fujeffrey1/ticketing-client
+      context: client
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
   local:
     push: false
-  # googleCloudBuild:
-  #   projectId: ticketing-dev-286019
 deploy:
   kubectl:
     manifests:
       - ./infrastructure/k8s/*
-# kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
