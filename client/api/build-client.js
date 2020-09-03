@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default ({ req }) => {
+function buildClient({ req }) {
     if (req) {
         return axios.create({
             baseURL: "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
@@ -11,4 +11,6 @@ export default ({ req }) => {
             baseUrl: "/",
         });
     }
-};
+}
+
+export default buildClient;
