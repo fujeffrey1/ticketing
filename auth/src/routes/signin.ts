@@ -40,7 +40,7 @@ router.post(
             jwt: userJwt,
         };
 
-        res.status(200).send(existingUser);
+        res.send(existingUser);
     }
 );
 
