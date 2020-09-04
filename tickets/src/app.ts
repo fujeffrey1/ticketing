@@ -4,6 +4,7 @@ import { json } from "body-parser";
 import cookieSession from "cookie-session";
 import { NotFoundError, errorHandler, currentUser } from "@fujeffrey1/common";
 
+import { indexTicketRouter } from "./routes/index";
 import { createTicketRouter } from "./routes/new";
 import { showTicketRouter } from "./routes/show";
 
@@ -18,6 +19,7 @@ app.use(
 );
 app.use(currentUser);
 
+app.use(indexTicketRouter);
 app.use(createTicketRouter);
 app.use(showTicketRouter);
 
