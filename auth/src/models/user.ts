@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 import { Password } from "../services/password";
 
-interface userAttrs {
+interface UserAttrs {
     email: string;
     password: string;
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {
-    build(attrs: userAttrs): UserDoc;
+    build(attrs: UserAttrs): UserDoc;
 }
 
 interface UserDoc extends mongoose.Document {
@@ -47,7 +47,7 @@ userSchema.pre("save", async function (done) {
     done();
 });
 
-userSchema.statics.build = (attrs: userAttrs) => {
+userSchema.statics.build = (attrs: UserAttrs) => {
     return new User(attrs);
 };
 
