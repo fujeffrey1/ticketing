@@ -1,6 +1,12 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
-import { BadRequestError, NotFoundError, OrderStatus, requireAuth, validateRequest } from "@fujeffrey1/common";
+import {
+    BadRequestError,
+    NotFoundError,
+    OrderStatus,
+    requireAuth,
+    validateRequest,
+} from "@fujeffrey1/common";
 import mongoose from "mongoose";
 
 import { Ticket } from "../models/ticket";
@@ -37,7 +43,9 @@ router.post(
         }
 
         const expiration = new Date();
-        expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
+        expiration.setSeconds(
+            expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS
+        );
 
         const order = Order.build({
             userId: req.currentUser!.id,
@@ -49,6 +57,7 @@ router.post(
 
         new OrderCreatedPublisher(natsWrapper.client).publish({
             id: order.id,
+            version: order.version,
             status: order.status,
             userId: order.userId,
             expiresAt: order.expiresAt.toISOString(),
