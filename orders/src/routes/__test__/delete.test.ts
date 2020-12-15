@@ -16,13 +16,13 @@ it("marks an order as cancelled", async () => {
 
     const user = global.signup();
 
-    const { body: order } = await request(app)
+    const { body: order } = await supertest
         .post("/api/orders")
         .set("Cookie", user)
         .send({ ticketId: ticket.id })
         .expect(201);
 
-    await request(app)
+    await supertest
         .delete(`/api/orders/${order.id}`)
         .set("Cookie", user)
         .send()
@@ -43,13 +43,13 @@ it("emits an order cancelled event", async () => {
 
     const user = global.signup();
 
-    const { body: order } = await request(app)
+    const { body: order } = await supertest
         .post("/api/orders")
         .set("Cookie", user)
         .send({ ticketId: ticket.id })
         .expect(201);
 
-    await request(app)
+    await supertest
         .delete(`/api/orders/${order.id}`)
         .set("Cookie", user)
         .send()

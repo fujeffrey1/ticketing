@@ -3,7 +3,7 @@ import request from "supertest";
 import { app } from "../../app";
 
 it("returns a 201 on successful signup", async () => {
-    return request(app)
+    return supertest
         .post("/api/users/signup")
         .send({
             email: "test@test.com",
@@ -13,7 +13,7 @@ it("returns a 201 on successful signup", async () => {
 });
 
 it("returns a 400 with an invalid email", async () => {
-    return request(app)
+    return supertest
         .post("/api/users/signup")
         .send({
             email: "dgkamdflgkmage",
@@ -23,7 +23,7 @@ it("returns a 400 with an invalid email", async () => {
 });
 
 it("returns a 400 with an invalid password", async () => {
-    return request(app)
+    return supertest
         .post("/api/users/signup")
         .send({
             email: "test@test.com",
@@ -33,14 +33,14 @@ it("returns a 400 with an invalid password", async () => {
 });
 
 it("returns a 400 with missing email or password", async () => {
-    await request(app)
+    await supertest
         .post("/api/users/signup")
         .send({
             email: "test@test.com",
         })
         .expect(400);
 
-    await request(app)
+    await supertest
         .post("/api/users/signup")
         .send({
             password: "p",
@@ -51,7 +51,7 @@ it("returns a 400 with missing email or password", async () => {
 it("disallows duplicate emails", async () => {
     await global.signup();
 
-    await request(app)
+    await supertest
         .post("/api/users/signup")
         .send({
             email: "test@test.com",

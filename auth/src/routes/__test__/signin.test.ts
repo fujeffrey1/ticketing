@@ -3,7 +3,7 @@ import request from "supertest";
 import { app } from "../../app";
 
 it("fails when an email that does not exist is supplied", async () => {
-    return request(app)
+    return supertest
         .post("/api/users/signin")
         .send({
             email: "test@test.com",
@@ -15,7 +15,7 @@ it("fails when an email that does not exist is supplied", async () => {
 it("fails when an incorrect password is supplied", async () => {
     await global.signup();
 
-    await request(app)
+    await supertest
         .post("/api/users/signin")
         .send({
             email: "test@test.com",
@@ -27,7 +27,7 @@ it("fails when an incorrect password is supplied", async () => {
 it("responds with a cookie when given valid credentials", async () => {
     await global.signup();
 
-    const response = await request(app)
+    const response = await supertest
         .post("/api/users/signin")
         .send({
             email: "test@test.com",

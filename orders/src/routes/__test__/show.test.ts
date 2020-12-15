@@ -14,13 +14,13 @@ it("fetches the order", async () => {
 
     const user = global.signup();
 
-    const { body: order } = await request(app)
+    const { body: order } = await supertest
         .post("/api/orders")
         .set("Cookie", user)
         .send({ ticketId: ticket.id })
         .expect(201);
 
-    const { body: fetchedOrder } = await request(app)
+    const { body: fetchedOrder } = await supertest
         .get(`/api/orders/${order.id}`)
         .set("Cookie", user)
         .send()
@@ -39,13 +39,13 @@ it("returns an error if one user tries to fetch another users order", async () =
 
     const user = global.signup();
 
-    const { body: order } = await request(app)
+    const { body: order } = await supertest
         .post("/api/orders")
         .set("Cookie", user)
         .send({ ticketId: ticket.id })
         .expect(201);
 
-    await request(app)
+    await supertest
         .get(`/api/orders/${order.id}`)
         .set("Cookie", global.signup())
         .send()

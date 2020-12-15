@@ -9,7 +9,7 @@ import { natsWrapper } from "../../nats-wrapper";
 it("returns an error if the ticket does not exist", async () => {
     const ticketId = mongoose.Types.ObjectId();
 
-    await request(app)
+    await supertest
         .post("/api/orders")
         .set("Cookie", global.signup())
         .send({ ticketId })
@@ -32,7 +32,7 @@ it("returns an error if the ticket is already reserved", async () => {
     });
     await order.save();
 
-    await request(app)
+    await supertest
         .post("/api/orders")
         .set("Cookie", global.signup())
         .send({ ticketId: ticket.id })
@@ -47,7 +47,7 @@ it("reserves a ticket", async () => {
     });
     await ticket.save();
 
-    await request(app)
+    await supertest
         .post("/api/orders")
         .set("Cookie", global.signup())
         .send({ ticketId: ticket.id })
@@ -62,7 +62,7 @@ it("emits an order created event", async () => {
     });
     await ticket.save();
 
-    await request(app)
+    await supertest
         .post("/api/orders")
         .set("Cookie", global.signup())
         .send({ ticketId: ticket.id })
