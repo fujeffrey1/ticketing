@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import { app } from "../../app";
 import { Ticket } from "../../models/ticket";
 
+const supertest = request(app);
+
 it("fetches the order", async () => {
     const ticket = Ticket.build({
         id: mongoose.Types.ObjectId().toHexString(),

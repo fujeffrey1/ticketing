@@ -6,6 +6,8 @@ import { Ticket } from "../../models/ticket";
 import { Order, OrderStatus } from "../../models/order";
 import { natsWrapper } from "../../nats-wrapper";
 
+const supertest = request(app);
+
 it("marks an order as cancelled", async () => {
     const ticket = Ticket.build({
         id: mongoose.Types.ObjectId().toHexString(),
