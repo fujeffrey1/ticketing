@@ -1,14 +1,39 @@
-import buildClient from "../api/build-client";
+import Link from "next/link";
 
-function LandingPage({ currentUser }) {
-    return <h1>You are signed {currentUser ? "in" : "out"}</h1>;
+function LandingPage({ tickets }) {
+    const ticketList = tickets.map((ticket) => (
+        <tr key={ticket.id}>
+            <td>{ticket.title}</td>
+            <td>{ticket.price}</td>
+            <td>
+                <Link href={`/tickets/${ticket.id}`}>
+                    <a>View</a>
+                </Link>
+            </td>
+        </tr>
+    ));
+
+    return (
+        <div>
+            <h1>Tickets</h1>
+            <table className='table'>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>{ticketList}</tbody>
+            </table>
+        </div>
+    );
 }
 
-export async function getServerSideProps(context) {
-    const client = buildClient(context);
-    const { data } = await client.get("/api/users/currentuser");
+LandingPage.getInitialProps = async (context, client, currentUser) => {
+    const { data } = await client.get("/api/tickets");
 
-    return { props: data };
-}
+    return { tickets: data };
+};
 
 export default LandingPage;
