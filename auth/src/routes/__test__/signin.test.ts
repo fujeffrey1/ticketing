@@ -2,6 +2,8 @@ import request from "supertest";
 
 import { app } from "../../app";
 
+const supertest = request(app);
+
 it("fails when an email that does not exist is supplied", async () => {
     return supertest
         .post("/api/users/signin")

@@ -13,6 +13,7 @@ declare global {
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000;
 
 jest.mock("../nats-wrapper");
+jest.mock("../stripe");
 
 let mongo: any;
 
