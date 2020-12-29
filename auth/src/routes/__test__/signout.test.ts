@@ -2,6 +2,8 @@ import request from "supertest";
 
 import { app } from "../../app";
 
+const supertest = request(app);
+
 it("clears the cookie after signing out", async () => {
     await global.signup();
 

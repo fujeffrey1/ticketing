@@ -4,6 +4,8 @@ import request from "supertest";
 
 import { app } from "../app";
 
+const supertest = request(app);
+
 declare global {
     namespace NodeJS {
         interface Global {

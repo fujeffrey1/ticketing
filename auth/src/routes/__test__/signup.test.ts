@@ -2,6 +2,8 @@ import request from "supertest";
 
 import { app } from "../../app";
 
+const supertest = request(app);
+
 it("returns a 201 on successful signup", async () => {
     return supertest
         .post("/api/users/signup")
